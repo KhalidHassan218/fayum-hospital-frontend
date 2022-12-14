@@ -1,14 +1,13 @@
-import React from 'react'
+import React , {useEffect} from 'react'
+import useScript from 'usescript-hook'
 import './options.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faClipboard} from '@fortawesome/free-solid-svg-icons'
-import 'https://cdn.lordicon.com/fudrjiwc.js'
 import {Link} from 'react-router-dom'
 import {useNavigate} from "react-router-dom"
 
 
 const Options = () => {
-   
  const navigate = useNavigate();
 
 
@@ -21,6 +20,26 @@ const Options = () => {
   const medicalrecord =() => {
     navigate("/السجل-الطبي");
   }
+
+
+
+
+
+
+const useScript = url =>{
+useEffect(() => {
+  const script = document.createElement('script')
+  script.src=url
+script.async=true;
+document.body.appendChild(script)
+
+  return () => {
+    document.body.removeChild(script)
+  }
+}, [url])
+}
+
+   useScript('https://cdn.lordicon.com/fudrjiwc.js')
 
 
   return (
