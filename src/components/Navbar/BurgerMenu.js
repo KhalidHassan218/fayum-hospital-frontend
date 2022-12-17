@@ -75,7 +75,7 @@ const {userValidation,setuserValidation,saveuser, setSaveUser ,setLogIn, setshow
 	
 
 
-<Link to="/">
+<Link to="/مواعيد-حضور-الدكاترة">
 	<p className='p-2 rounded'>
 
 مواعيد حضور الدكاترة
