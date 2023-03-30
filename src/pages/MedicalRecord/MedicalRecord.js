@@ -4,10 +4,13 @@ import toast from 'react-hot-toast'
 import { Context } from '../../context/ContextState'
 import { faCaretDown , faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import obimimage from '../../Assets/obim-removebg-preview-small.png'
+import {IoLocationSharp} from 'react-icons/io5'
+import {AiOutlinePhone} from 'react-icons/ai'
 
 const MedicalRecord = () => {
   const context = useContext(Context)
-    const {LogIn,usersArray,setusersArray,showUserBooked, setshowUserBooked} = context
+    const {LogIn,usersArray,setusersArray,showUserBooked, saveuser , setshowUserBooked} = context
 const [egyidConfirm, setegyidConfirm] = useState('')
 const [idSpare, setidSpare] = useState('')
 const [docCode, setdocCode] = useState('')
@@ -18,6 +21,8 @@ const [filteredEgyId2, setfilteredEgyId2] = useState([])
 const [prescription, setprescription] = useState('')
 const [previousPrescription, setprevoiusPrescription] = useState('')
 const [createPrescription, setcreatePrescription] = useState({ medicine:'' , medicinePrescription:'', date:'' , id:''})
+const [search, setsearch] = useState('')
+const [notfound, setnotfound] = useState([])
 
 
 
@@ -63,7 +68,7 @@ let userbookedarraynew = (usersArray.myPrescription).filter(element => {
  )
 
 
- 
+ setnotfound(userbookedarraynew)
  setfilteredEgyId2(userbookedarraynew)
     }
 }, [usersArray])
@@ -76,6 +81,59 @@ const handlesubmitbutton = ()=>{
     }
     
 }
+
+let savedUserDetails = localStorage.getItem('UsersDetails')
+
+useEffect(() => {
+  
+
+  
+setfilteredEgyId2(notfound)
+
+
+
+
+  let adjustingarrray = notfound?.filter((element)   =>  element.medicinePrescription.toLowerCase().includes(search.toLowerCase()) ? element  : ''
+    
+) 
+  setfilteredEgyId2(adjustingarrray)
+
+  
+}, [search])
+
+
+
+//     useEffect(() => {
+
+// if(filteredEgyId2.length > 0 ){
+
+//   if(savedUserDetails){
+//     setusersArray(JSON.parse(savedUserDetails))
+//   }
+// }
+
+  
+
+
+  
+
+      
+    
+  
+ 
+         
+//     },[filteredEgyId2])
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -102,6 +160,7 @@ let userbookedarray2 = (usersArray.myPrescription).filter(element => {
 setshowUserBooked(true)
 setfilteredEgyId(userbookedarray)
 setfilteredEgyId2(userbookedarray2)
+setnotfound(userbookedarray2)
 setegyidConfirmed(true)
 setcreatePrescription({...createPrescription , id:egyidConfirm})
 
@@ -130,8 +189,7 @@ const prescriptionSubmit =(e)=>{
      let specialNo = (usersArray.myPrescription).length + 1
   
 
-    // console.log((createPrescription.num).length, 'serial') 
-    console.log((usersArray.myPrescription).length, 'length') 
+    
     let newprescription = [...usersArray.myPrescription ,{...createPrescription, num:specialNo}]
 setusersArray({...usersArray,myPrescription:newprescription })
     toast.success('تم الإضافة بنجاح ')
@@ -177,8 +235,7 @@ const removeFromList =(elementId)=>{
 
 let userbookedarraynew2 = (usersArray.myPrescription).filter((element,index) => {
 
-console.log(element.num,"filter")
-console.log(elementId,"function")
+
  return (element.num !== elementId )}
  )
 
@@ -199,22 +256,69 @@ console.log(elementId,"function")
 
   return (
     <>
+   
     <div className='black'>
         <FontAwesomeIcon className='xmark'  style={{cursor:'pointer',color:"white"}} onClick={closeBlack} icon={faXmark}/ >
  <div className='form-parent p-3'>
-{docCodeConfirmed ?<form onSubmit={prescriptionSubmit}> 
-    
-    <label className='ms-3 mb-2' style={{color:'white'}}>اسم الدواء </label>
+{docCodeConfirmed ?<form className='prescription-form' onSubmit={prescriptionSubmit}> 
+    <div className='prescriptionimage-date d-flex flex-column align-items-center '>
+      <div className='d-flex w-100 align-items-center justify-content-between pres-head'>
+     
+<h1 className='m-0 '>عيادة</h1>
+
+   <img style={{width:'30%'}} src={obimimage} alt='obim' />
+      </div>
+   <div className='doctor-patient-date d-flex align-items-center w-100 justify-content-between mt-5'>
+<div className='doctor-patient'>
+  <span>الدكتور: </span>
+<span className='ms-5'>..................</span>
+  <span>المريض:</span>
+<span>{saveuser} </span>
+</div>
+<div className='pres-date'>
+
+<span>التاريخ:</span>
+
+
+<span>{createPrescription.date}</span>
+
+
+</div>
+   </div>
+    </div>
+    {/* <label className='ms-3 mb-2' style={{color:'white'}}>اسم الدواء </label>
   <input required style={{width:"100%"}} className='rounded' type="text" value={createPrescription.medicine} onChange={(e) => setcreatePrescription({...createPrescription , medicine:e.target.value})}></input>
     <label className='ms-3 mb-2' style={{color:'white'}}> الوصف </label>
   <textarea required style={{width:"100%"}} className='rounded'  value={createPrescription.medicinePrescription} onChange={(e) => setcreatePrescription({...createPrescription , medicinePrescription:e.target.value})}></textarea>
   <button  className='mt-2 '>
     إضافة
+  </button> */}
+    
+    <textarea  
+    required
+    value={createPrescription.medicinePrescription}  
+    placeholder='الدواء / عدد الجرعات / ملاحظات ...'
+    onChange={(e) => setcreatePrescription({...createPrescription , medicinePrescription:e.target.value})}
+    >
+
+    </textarea>
+    <button  className='mt-2 '>
+    إضافة
   </button>
-    
-    
-    
+    <div className='pres-footer'>
+      <div>
+<IoLocationSharp className='ms-1'/>
+<span>الفيوم - العامرية - خلف السيتي سنتر </span>
+
+      </div>
+      <div>
+<AiOutlinePhone/>
+<span> +0200106547838</span>
+
+      </div>
+    </div>
      </form>
+        
 
 
 :
@@ -226,7 +330,12 @@ console.log(elementId,"function")
     إدخال
   </button>
 
-            </form>}
+            </form>
+            
+            
+            
+            
+            }
             
             
 
@@ -299,11 +408,11 @@ console.log(elementId,"function")
 <div className='doc-table mt-3 table-responsive'>
      <h1 className={filteredEgyId2.length ? "d-none" : "d-block"}>   لا توجد روشتة </h1>  
     <h1 className={filteredEgyId2.length ? "d-block" : "d-none"}>  روشتة المريض  </h1>
+    <input type='search' placeholder='ابحث عن اسم الدواء...' className='search-medicine my-2 ' value={search} onChange={(e) => setsearch(e.target.value) } />
 <table  className={filteredEgyId2.length ? "table" : "d-none"}>
   <thead>
     <tr className='doc'>
       <th scope="col">#</th>
-      <th scope="col">الدواء</th>
       <th scope="col">الوصف</th>
       <th scope="col">تاريخ الإنشاء</th>
       <th className='text-center' scope="col">حذف </th>
@@ -315,7 +424,7 @@ console.log(elementId,"function")
       {filteredEgyId2.map((element,i)=>(
     <tr>
       <th scope="row" className='doc' >{i+1}</th>
-      <td>{element.medicine} </td>
+      
       <td>{element.medicinePrescription} </td>
       <td>{element.date} </td>
       <td onClick={()=> removeFromList(element.num)} className='text-center'><FontAwesomeIcon className='xmark2'  style={{cursor:'pointer',color:"white"}}  icon={faXmark}/ > </td>

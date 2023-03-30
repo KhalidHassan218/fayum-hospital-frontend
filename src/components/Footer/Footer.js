@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../Assets/جامعة الفيوم.png'
+import logo from '../../Assets/obim-removebg-preview.png'
 import './footer.css'
 import {Link} from 'react-router-dom'
 
@@ -23,8 +23,8 @@ window.scroll({top:'0', behavior:'smooth'})
 <div className='container'>
 <div className='row'>
 <div className='col-lg-4 col-md-12 col-sm-12 mb-md-5 mb-sm-5'>
-<h3 className='mb-3'>مستشفى جامعة الفيوم</h3>
-<a target='blank' href='https://www.fayoum.edu.eg/hospital/AboutCollegePage6.aspx'>
+<h3 className='mb-3'>OBIM APP </h3>
+<a  href='http://localhost:3000/'>
 
   <div style={{cursor:"pointer"}} className='logo'>
         <img src={logo} alt="hospital"/>
@@ -51,16 +51,16 @@ window.scroll({top:'0', behavior:'smooth'})
 <div className='col-lg-4 col-md-6 col-sm-6'>
 <h3 className='mb-3'>  تابعونا على </h3>
 
-<a target='blank' href='https://www.facebook.com/FayoumU/'>
+<a target='blank' href='https://www.facebook.com/Mostafamahmoudtv'>
     <p>الفيسبوك </p>
 </a>
-<a target='blank' href='https://twitter.com/fayuniversity'>
+<a target='blank' href='https://www.facebook.com/Mostafamahmoudtv'>
     <p>تويتر </p>
 </a>
-<a target='blank' href='https://fayoum.edu.eg/'>
-    <p>الموقع الرسمي لجامعة الفيوم </p>
+<a target='blank' href='https://www.youtube.com/@MostafaMahmoudTV/videos'>
+    <p>رابط اليوتيوب الخاص بنا </p>
 </a>
-<a target='blank' href='https://ar.wikipedia.org/wiki/%D8%AC%D8%A7%D9%85%D8%B9%D8%A9_%D8%A7%D9%84%D9%81%D9%8A%D9%88%D9%85'>
+<a target='blank' href='https://www.youtube.com/@MostafaMahmoudTV/videos'>
     <p>ويكيبيديا  </p>
 </a>
 
@@ -91,3 +91,6 @@ window.scroll({top:'0', behavior:'smooth'})
 }
 
 export default Footer
+
+
+

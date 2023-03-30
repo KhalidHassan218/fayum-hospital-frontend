@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import StateContext from './context/ContextState';
 import { AuthProvider } from './context/AuthProvider';
 import { Toaster } from 'react-hot-toast';
+import { Provider } from "react-redux";
+import { store } from "./pages/MapTest/store";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,8 +17,9 @@ root.render(
     <StateContext>
       <AuthProvider>
               <Toaster />
-
+              <Provider store={store}>
     <App />
+    </Provider>
     </AuthProvider>
     </StateContext>
    

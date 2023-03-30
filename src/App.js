@@ -5,7 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 
 import Register from './components/Register/Register';
-import React,{useContext} from 'react'
+import React,{useContext  , useState} from 'react'
 import { Context } from './context/ContextState';
 import HeroSlider from './components/HeroSlider/HeroSlider';
 import Options from './components/Options/Options';
@@ -22,18 +22,59 @@ import AdminPage from './pages/AdminPage/AdminPage';
 import DoctorsVacation from './pages/DoctorsVacation/DoctorsVacation';
 import Departments from './pages/departments/Departments';
 import Footer from './components/Footer/Footer';
+import Chatbot from 'react-chatbot-kit'
+import 'react-chatbot-kit/build/main.css';
+import MessageParser from './components/MessageParser/MessageParser';
+import ActionProvider from './components/ActionProvider/ActionProvider';
+import config from './components/config/config';
+import {AiFillMessage} from 'react-icons/ai'
+import {IoIosArrowDropdownCircle} from 'react-icons/io'
+import Fade from "react-reveal/Fade";
+import MapComponent from './pages/MapTest/MapTest';
+
+
+
+
+
 function App() {
-const context = useContext(Context)
-const {user,setuser,password,setpassword,userValidation,setuserValidation ,showNewReg ,  setshowNewReg , showburgermenu, setshowburgermenu} = context
+  const context = useContext(Context)
+  const {user,setuser,password,setpassword,userValidation,setuserValidation ,LogIn,saveuser, showNewReg ,  setshowNewReg , showburgermenu, setshowburgermenu} = context
+const [chatbot, setchatbot] = useState(false)
+const [closechatbot, setclosechatbot] = useState(false)
 
 
-  return (
+
+
+const handlebotopen= () =>{
+
+  setchatbot(true)
+setclosechatbot(true)
+
+}
+const handlebotclose= () =>{
+
+  setchatbot(false)
+setclosechatbot(false)
+
+}
+
+
+
+
+
+
+
+const username = `اهلا (${saveuser}) في المحادثة`
+
+
+  return ( 
     <div className="App">
       
       <BrowserRouter>
 { showburgermenu ? <BurgerMenu/> :'' }
 {showNewReg ? <Register/> : '' }
       <Navbar/>
+      
       <Routes>
 
       <Route path="/" element={<HomePage/>}></Route>
@@ -46,9 +87,30 @@ const {user,setuser,password,setpassword,userValidation,setuserValidation ,showN
       <Route path="/admin/receptionist" element={<AdminPage/>}></Route>
       <Route path="/إجازة-الأطباء" element={<DoctorsVacation/>}></Route>
       <Route path="/التخصصات-المتاحة" element={<Departments/>}></Route>
+      <Route path="/map" element={<MapComponent/>}   ></Route>
 
       </Routes>
 <Footer/>
+<div className='chatbot'>
+{LogIn && !closechatbot  && 
+<AiFillMessage color='green'  onClick={() =>   handlebotopen()   }  />
+}
+{chatbot &&
+<Fade big>
+<div className='chatbot-content'>
+<IoIosArrowDropdownCircle  color='green' onClick={() => handlebotclose()} />
+
+<Chatbot
+       config={config}
+       messageParser={MessageParser}
+       actionProvider={ActionProvider}
+       headerText= {username} 
+       placeholderText='اكتب أي كلمة مثال : أهلا'
+       />
+       </div>
+       </Fade>
+}
+       </div>
       </BrowserRouter>
 
       
@@ -57,4 +119,4 @@ const {user,setuser,password,setpassword,userValidation,setuserValidation ,showN
   );
 }
 
-export default App;
+export default App ;
